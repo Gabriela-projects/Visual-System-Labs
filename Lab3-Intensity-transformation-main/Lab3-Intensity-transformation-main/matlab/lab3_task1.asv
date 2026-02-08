@@ -1,0 +1,14 @@
+clear all
+imfinfo('assets/breastXray.tif')
+f = imread('assets/breastXray.tif');
+imshow(f)
+
+[fmin, fmax] = bounds(f(:));
+imshow(f(:,241:482))
+
+g1 = imadjust(f, [0 1], [1 0]);
+figure
+montage({f, g1})
+
+g2 = imadjust(f, [0.5 0.75], [0 1]);
+g3 = imadjust(f, [], [], 2);
