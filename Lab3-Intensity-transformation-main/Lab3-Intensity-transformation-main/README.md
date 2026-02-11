@@ -1,5 +1,5 @@
-# Lab 3 - Intensity Transformation and Spatial Filtering
-*_Peter Cheung, version 1.2, 29 Jan 2026_*
+# Lab 3 Logbook - Intensity Transformation and Spatial Filtering
+*_Gabriela Lee, version 1.2, 7 Feb 2026_*
 
 This lab session aims to demonstrate the topics covered in Lectures 4 and 5 using Matlab.  The choice of Matlab is driven by their excellent set of functions included in the Image Processing Toolbox.  As Design Engineers, it is more important for you to understand the principles and then use ready-made libraries to perform processing on visual data, than to write low-level code to implement the algorithms.
 
@@ -41,7 +41,7 @@ The minimum intensity value (fmin) is 21 and the maximum intensity value (fmax) 
 
 **Test yourself**: Display the right half of the image. Capture it for your logbook.
 
-Since the image dimension is 571 x 482, so I need tos slice it to only display 241 - 482 columns to display only the right side of the image. 
+***Since the image dimension is 571 x 482, so I need tos slice it to only display 241 - 482 columns to display only the right side of the image.*** 
 ```
 imshow(f(:,241:482))  % display only right side of the image
 ```
@@ -84,9 +84,9 @@ This produces a result similar to that of g2 by compressing the low end and expa
 
 <p align="center"> <img src="assets/breast_gamma_corr.jpg" /> </p><BR>
 
-g2 is stretching the contrast so that you can identify the lump easier. For any pixels <= 0.5, it maps them to 0 (black), whilst for any pixels >= 0.75, it maps them to 1 (white), for any pixels between 0.5-0.75, it stretches them linearly to fill [0, 1]. However, it loses the details in dark and birght regions. 
+***g2 is stretching the contrast so that you can identify the lump easier. For any pixels <= 0.5, it maps them to 0 (black), whilst for any pixels >= 0.75, it maps them to 1 (white), for any pixels between 0.5-0.75, it stretches them linearly to fill [0, 1]. However, it loses the details in dark and birght regions.***
 
-g3 uses gamma correction which is nonlinear 𝑠 = 𝑐𝑟^ γ , the gamma is 2.0, causing the image to be darker. With the gamma equation, the low intensity value gradually compresses and the high intensity gradually expands. Gamma correction ensures all intensities remain represented.
+***g3 uses gamma correction which is nonlinear 𝑠 = 𝑐𝑟^ γ , the gamma is 2.0, causing the image to be darker. With the gamma equation, the low intensity value gradually compresses and the high intensity gradually expands. Gamma correction ensures all intensities remain represented.***
 
 ## Task 2: Contrast-stretching transformation
 
@@ -119,10 +119,10 @@ The intensity values of s are normalized to the range of [0.0 1.0] and is in typ
 
 Discuss the results with your classmates and record your observations in your logbook.
 
-We observed that the original image has a low global constrast and most of the pixels are clustered in a limited gray-level range. After the transformation, the bones such as the skull, ribs, and joints in the image have now been became more prominent and easier to separated from soft tissue. However, the low-intensity regions are also amplified, causing the image to look grainier.  
+***We observed that the original image has a low global constrast and most of the pixels are clustered in a limited gray-level range. After the transformation, the bones such as the skull, ribs, and joints in the image have now been became more prominent and easier to separated from soft tissue. However, the low-intensity regions are also amplified, causing the image to look grainier.***  
 <p align="center"> <img src="assets/bonescan_constrast_stretch.jpg" /> </p><BR>
 
-The constrast stretching transformation redistributes the light intensity of the original image (r) around the mean intensity of image (k). When r > k, k/r < 1, so the output s increases. It stretches the intensities above k, making brighter structures more distinguishable. When r < k, k/r > 1, so the output s decreases, compressing the intensities below k and making dark pixels darker. The value E determines the steepness of the curve hence deciding the strength of compression and expansion. Larger E controls how strongly the transformation separates intensities around the mean level, and it can be any positive number. So E = 0.9 has a moderate enhancement. 
+***The constrast stretching transformation redistributes the light intensity of the original image (r) around the mean intensity of image (k). When r > k, k/r < 1, so the output s increases. It stretches the intensities above k, making brighter structures more distinguishable. When r < k, k/r > 1, so the output s decreases, compressing the intensities below k and making dark pixels darker. The value E determines the steepness of the curve hence deciding the strength of compression and expansion. Larger E controls how strongly the transformation separates intensities around the mean level, and it can be any positive number. So E = 0.9 has a moderate enhancement.*** 
 
 
 ## Task 3: Contrast Enhancement using Histogram
@@ -155,7 +155,7 @@ imhist(g);
 The histogram of the adjusted image is more spread out.  It is definitely an improvement but it is still not a good image.
 
 
-Before the transformation, the image has low contrast, with the overall tone being grey and blurry. The textures on the poll grains are difficult to identify and the histogram is squashed between 70-140, underutilising the full range of [0 255]. After the transformation, the image contrast improves, it looks clearer although still a bit blurry, the dark spots on the pollen grains and the shadows between them becomes a lot deeper. It appears more like a 3D image. The histogram is now wider and stretched between 58-234, covering near the full range. However, the histogram is still not uniform, suggesting that the constrat is improved but not optimal.
+***Before the transformation, the image has low contrast, with the overall tone being grey and blurry. The textures on the poll grains are difficult to identify and the histogram is squashed between 70-140, underutilising the full range of [0 255]. After the transformation, the image contrast improves, it looks clearer although still a bit blurry, the dark spots on the pollen grains and the shadows between them becomes a lot deeper. It appears more like a 3D image. The histogram is now wider and stretched between 58-234, covering near the full range. However, the histogram is still not uniform, suggesting that the constrat is improved but not optimal.***
 
 <p align="center"> <img src="assets/pollen_intensity_stretched.jpg" /> </p><BR>
 <p align="center"> <img src="assets/histogram_stretched.jpg" /> </p><BR>
@@ -177,9 +177,9 @@ subplot(1,2,2)                  % plot 2 in a 1x2 subplot
 plot(g_cdf)
 ```
 
-The PDF divide the number of pixels at each intensity level (imhist(g))by the total number of pixels in the image (numel(g)). The y-axis shows the probability that a randomly selected pixel will have that specific intensity. According to the PDF, there is a high probability for the pixel to be at 59 (~7%), 75 (~4.5%), and 79 (7.6%) intensity level, whilst the remaining of the plot to be more "normally distributed". This is because the surface and shadow of the pollen grains in the original image have very similar grey values, causing the values to all mapped to a single "bin" during stretching. 
+***The PDF divide the number of pixels at each intensity level (imhist(g))by the total number of pixels in the image (numel(g)). The y-axis shows the probability that a randomly selected pixel will have that specific intensity. According to the PDF, there is a high probability for the pixel to be at 59 (~7%), 75 (~4.5%), and 79 (7.6%) intensity level, whilst the remaining of the plot to be more "normally distributed". This is because the surface and shadow of the pollen grains in the original image have very similar grey values, causing the values to all mapped to a single "bin" during stretching.*** 
 
-The CDF informs the probability that a pixel has an intensity less than or equal to a certain intensity level. A perfectly straght diagonal line would represent an image with perfectly uniform contrast. The plot has a flat horizontal line between 0 - 50, indicating there are no pixels at those intensity levels. This shows the image contains no dark shadows in that specific range, and the darkest region starts around intensity 55. The gradient between 55 - 100 is very steep due to the spikes in the PDF plot (in 59, 79). Whilst between 100 - 200, it has a relatively uniform gradient, the image pixels' intensities are uniformly distributed. At 200 and above, the gradient levels off and becomes smoother as it approaches to 1. There are very few pixels at very bright levels. 
+***The CDF informs the probability that a pixel has an intensity less than or equal to a certain intensity level. A perfectly straght diagonal line would represent an image with perfectly uniform contrast. The plot has a flat horizontal line between 0 - 50, indicating there are no pixels at those intensity levels. This shows the image contains no dark shadows in that specific range, and the darkest region starts around intensity 55. The gradient between 55 - 100 is very steep due to the spikes in the PDF plot (in 59, 79). Whilst between 100 - 200, it has a relatively uniform gradient, the image pixels' intensities are uniformly distributed. At 200 and above, the gradient levels off and becomes smoother as it approaches to 1. There are very few pixels at very bright levels.*** 
 
 <p align="center"> <img src="assets/pdf_cdf.jpg" /> </p><BR>
 
@@ -201,7 +201,7 @@ ylabel('Output intensity values', 'fontsize', 9)
 title('Transformation function', 'fontsize', 12)
 ```
 
-The CDF now shows how an input intensity (x-axis) maps to an output intensity (y-axis). Both the x-axist and y-axis values have now been normalised in the range of 0 - 1. From the plot, there are no pixels between 0 - 0.21, and the y-axis ranges more between 0.22 - 0.4 reflecting the steep gradient between 55 - 100 in the original CDF plot.
+***The CDF now shows how an input intensity (x-axis) maps to an output intensity (y-axis). Both the x-axist and y-axis values have now been normalised in the range of 0 - 1. From the plot, there are no pixels between 0 - 0.21, and the y-axis ranges more between 0.22 - 0.4 reflecting the steep gradient between 55 - 100 in the original CDF plot.***
 <p align="center"> <img src="assets/cdf.jpg" /> </p><BR>
 
 
@@ -217,7 +217,7 @@ subplot(1,3,2); imhist(g);
 subplot(1,3,3); imhist(h);
 ```
 
-The histogram equalised image is now a lot brighter and very clear with no blurrness. The dark spots and texture of the pollens are more pronounced due to the high contrast. Dark and bright regions are clearly separated. The histogram of the equalised image distributes across almost the entire intensity range, with the distribution being closer to uniform. Compared to the original and constrast stretched histograms, the equalised histogram has a much broader and uniform range. 
+***The histogram equalised image is now a lot brighter and very clear with no blurrness. The dark spots and texture of the pollens are more pronounced due to the high contrast. Dark and bright regions are clearly separated. The histogram of the equalised image distributes across almost the entire intensity range, with the distribution being closer to uniform. Compared to the original and constrast stretched histograms, the equalised histogram has a much broader and uniform range.*** 
 <p align="center"> <img src="assets/pollen_montage.jpg" /> </p><BR>
 <p align="center"> <img src="assets/normalised_img.jpg" /> </p><BR>
 
@@ -260,29 +260,29 @@ montage({f, g_box, g_gauss})
 ```
 Comment on the results.  
 
-The image with the averaging filter kernel has a noticeable blurring with reduced noise. The edges of components become smoother and the overall image appears softer. This is because the averaging filter is a lowpass filter that replaces each pixel's value with the average of its neighbors to dilute sudden changes. This is also why the edges of the components and fine textures become blurred with noise reduced. The 9 x 9 kernel distributes equal weightage for the center pixel and the pixels at the far croners, blurring the noise across a large area. 
+***The image with the averaging filter kernel has a noticeable blurring with reduced noise. The edges of components become smoother and the overall image appears softer. This is because the averaging filter is a lowpass filter that replaces each pixel's value with the average of its neighbors to dilute sudden changes. This is also why the edges of the components and fine textures become blurred with noise reduced. The 9 x 9 kernel distributes equal weightage for the center pixel and the pixels at the far croners, blurring the noise across a large area.*** 
 
-The image with the Gaussian kernel is a lot clearer than the image with the averaging filter. The component edges remain sharp with details retained, whilst noise is reduced and the overall appearance is smoother than the original image. The Gaussian filter gives more weight to central pixels and less to peripheral ones, which helps preserve edges better than the uniform averaging. 
+***The image with the Gaussian kernel is a lot clearer than the image with the averaging filter. The component edges remain sharp with details retained, whilst noise is reduced and the overall appearance is smoother than the original image. The Gaussian filter gives more weight to central pixels and less to peripheral ones, which helps preserve edges better than the uniform averaging.*** 
 
-The image with the Gaussian kernel 
+***The image with the Gaussian kernel*** 
 <p align="center"> <img src="assets/PCB_filters.jpg" /> </p><BR>
 
 
 >Test yourself: Explore various kernel size and sigma value for these two filters. Comment on the trade-off between the choice of these parameters and the effect on the image.
 
-I tested averaging filters with various sizes: 4x4, 9x9, 14x14, and 20x20. I observed that larger kernels offer stronger noise reduction by averaging over more pixels but the image appears more blurry, smoother, and softer, with severe detail loss. The edges are poorly defined too. Whilst smaller kernel size (4x4) maintains the component boundaries so it has a higher spatial resolution although noise is still visible. 
+***I tested averaging filters with various sizes: 4x4, 9x9, 14x14, and 20x20. I observed that larger kernels offer stronger noise reduction by averaging over more pixels but the image appears more blurry, smoother, and softer, with severe detail loss. The edges are poorly defined too. Whilst smaller kernel size (4x4) maintains the component boundaries so it has a higher spatial resolution although noise is still visible.*** 
 
 <p align="center"> <img src="assets/average_filter_size.jpg" /> </p><BR>
 
-I tested Gaussian filters with various sizes with sigma value being kept constant (1.0): 2x2, 7x7, 12x12, and 17x17. All the image look remarkably similar to each other with little visible differences, unlike the averaging filters. This is probabily because when sigma is small, the Gaussian distribution is very narrow so most of the weight is in the central few pixels, regardless of kernel size. 
+***I tested Gaussian filters with various sizes with sigma value being kept constant (1.0): 2x2, 7x7, 12x12, and 17x17. All the image look remarkably similar to each other with little visible differences, unlike the averaging filters. This is probabily because when sigma is small, the Gaussian distribution is very narrow so most of the weight is in the central few pixels, regardless of kernel size.*** 
 
 <p align="center"> <img src="assets/gaussian_filter_size.jpg" /> </p><BR>
 
-I then used a fixed 7x7 Gaussian filters with various sigma values: sigma = 0.5, 1.0, 3.0, and 5.0. As seen in the following image, the larger the sigma, the more blurred and smooth the PCB becomes with greater noise reduction. Unlike the averaging filter however, the edges remain preserved. This is because as sigma increases, the spread of the Gaussian distribution widens, causing each pixel to be influenced by more neighbors, resulting in more smoothing. However, keeping the kernal size the same would cut off the tails of the distribution, where the Gaussian curve extends beyond the kernel boundaries. Therefore, there is less blurring than sigma would normally produce. 
+***I then used a fixed 7x7 Gaussian filters with various sigma values: sigma = 0.5, 1.0, 3.0, and 5.0. As seen in the following image, the larger the sigma, the more blurred and smooth the PCB becomes with greater noise reduction. Unlike the averaging filter however, the edges remain preserved. This is because as sigma increases, the spread of the Gaussian distribution widens, causing each pixel to be influenced by more neighbors, resulting in more smoothing. However, keeping the kernal size the same would cut off the tails of the distribution, where the Gaussian curve extends beyond the kernel boundaries. Therefore, there is less blurring than sigma would normally produce.*** 
 
 <p align="center"> <img src="assets/gaussian_sigma.jpg" /> </p><BR>
 
-I then proportionally scaled kernel sizes with sigma with kernel size being approximately 6 x sigma to capture ~100% of the Gaussian distribution. This ensures filter coefficients sum to 1.0 to preserve image brightness. The parameters control the trade-off between noise reduction and detail preservation. The smaller the sigma, the more details are retained with minimal noise reduction (sigma = 0.5), whilst larger sigma (5.0) loses more details and heavy blurring. Although the component boundaries are very soft, they are still defined instead of being completely washed out like in averaging filters. For the purpose of PCB inspection, sigma = 1.0 in 7x7 kernel size seems to be the optimal.
+***I then proportionally scaled kernel sizes with sigma with kernel size being approximately 6 x sigma to capture ~100% of the Gaussian distribution. This ensures filter coefficients sum to 1.0 to preserve image brightness. The parameters control the trade-off between noise reduction and detail preservation. The smaller the sigma, the more details are retained with minimal noise reduction (sigma = 0.5), whilst larger sigma (5.0) loses more details and heavy blurring. Although the component boundaries are very soft, they are still defined instead of being completely washed out like in averaging filters. For the purpose of PCB inspection, sigma = 1.0 in 7x7 kernel size seems to be the optimal.***
 
 <p align="center"> <img src="assets/gaussian_proportion_size.jpg" /> </p><BR>
 
@@ -298,7 +298,7 @@ figure; montage({f, g_median})
 ```
 Comment on the results.
 
-The median filtered image almost completely eliminated the noise whilst preserving component boundaries. The IC pins are still clearly distinguishable and the background appears clean without the blurring seen in averaging and Gaussian filters. The median filter selects the middle value from the neighborhood pixels and replaces the target pixiel with the median value to avoid the influence from the outliers. This non-linearity avoids the median filter to cause blurring and preserve sharpness better. 
+***The median filtered image almost completely eliminated the noise whilst preserving component boundaries. The IC pins are still clearly distinguishable and the background appears clean without the blurring seen in averaging and Gaussian filters. The median filter selects the middle value from the neighborhood pixels and replaces the target pixiel with the median value to avoid the influence from the outliers. This non-linearity avoids the median filter to cause blurring and preserve sharpness better.*** 
 
 <p align="center"> <img src="assets/median_filter.jpg" /> </p><BR>
 
@@ -307,7 +307,7 @@ The median filtered image almost completely eliminated the noise whilst preservi
 
 Now that you are familiar with the Matlab functions _fspecial_ and _imfilter_, explore with various filter kernels to sharpen the moon image stored in the file _moon.tif_. The goal is to make the moon photo sharper so that the craters can be observed better.
 
-Laplacian filters:
+***Laplacian filters:***
 ```
 clear all
 close all
@@ -336,10 +336,10 @@ title("original image (left), Laplacian filter (mid), sharpened image (right)")
 
 <p align="center"> <img src="assets/laplacian_filter.jpg" /> </p><BR>
 
-As seen in the processed images, the craters become a lot sharper and visible after applying the Laplacian filter. The original moon craters are soft and gradual, and the image is a bit blurry. After sharpening, even small craters are clear with more detailed overall surface texture. The top right image shows where the Laplacian response detects edges. The Laplacian filter is a second-order derivative operator that detects regions of rapid intensity change in an image. This is why it produces strong responses at craters, where brightness changes from the sunlit crater walls to the shadowed crater floors. By subtracting these responses from the original image, we add back the high-frequency edge information which make the transitions more pronounced. 
+***As seen in the processed images, the craters become a lot sharper and visible after applying the Laplacian filter. The original moon craters are soft and gradual, and the image is a bit blurry. After sharpening, even small craters are clear with more detailed overall surface texture. The top right image shows where the Laplacian response detects edges. The Laplacian filter is a second-order derivative operator that detects regions of rapid intensity change in an image. This is why it produces strong responses at craters, where brightness changes from the sunlit crater walls to the shadowed crater floors. By subtracting these responses from the original image, we add back the high-frequency edge information which make the transitions more pronounced.*** 
 
 
-Sobel filters:
+***Sobel filters:***
 ```
 clear all
 close all
@@ -371,10 +371,10 @@ title("Original image (top left), Sobel gradient (top right), sharpened image (b
 
 <p align="center"> <img src="assets/sobel_filter.jpg" /> </p><BR>
 
-As seen in the sharpened image, the craters are more pronounced with enhanced surface texture throughout the lunar surface. THe Sobel gradient magnitude image (top right) shows the filter primarily detected directional intensity changes along crater boundaries and surface features. Unlike the Laplacian which is a second-order derivative operator, the Sobel filter is a first-order derivative operator that detects edges by both horizontal and vertical gradients. It uses 2 separate kernels to measure the rate of intensity change in the x and y directions, then combines these using the gradient magnitude formula. Since the magnitude will always be positive, it's added back to the original image to boost edge contrast. Compared to the Laplacian sharpening, Sobel offers a smoother and more gradual edge enhancement for the craters but the fine details are less enhanced. 
+***As seen in the sharpened image, the craters are more pronounced with enhanced surface texture throughout the lunar surface. THe Sobel gradient magnitude image (top right) shows the filter primarily detected directional intensity changes along crater boundaries and surface features. Unlike the Laplacian which is a second-order derivative operator, the Sobel filter is a first-order derivative operator that detects edges by both horizontal and vertical gradients. It uses 2 separate kernels to measure the rate of intensity change in the x and y directions, then combines these using the gradient magnitude formula. Since the magnitude will always be positive, it's added back to the original image to boost edge contrast. Compared to the Laplacian sharpening, Sobel offers a smoother and more gradual edge enhancement for the craters but the fine details are less enhanced.*** 
 
 
-Unsharp filters:
+***Unsharp filters:***
 ```
 sharpenedImage = imsharpen(f);
 
@@ -382,21 +382,21 @@ figure; montage({f, sharpenedImage})
 title("Original image (left), Unsharp Masking (right)")
 ```
 
-Using the default value of the unsharp masking (sharpening radius = 1.0, sharpness strength = 0.8), the moon craters look slightly sharper but the overall image still looks blurry, possibly due to the parameters being too conservative.  
+***Using the default value of the unsharp masking (sharpening radius = 1.0, sharpness strength = 0.8), the moon craters look slightly sharper but the overall image still looks blurry, possibly due to the parameters being too conservative.***  
 <p align="center"> <img src="assets/unsharp_mask.jpg" /> </p><BR>
 
-After increasing the radius of sharpening to 2.0, and sharpness strength to 1.5, the craters and textures on the moon became a lot more visible and distinct.
+***After increasing the radius of sharpening to 2.0, and sharpness strength to 1.5, the craters and textures on the moon became a lot more visible and distinct.***
 <p align="center"> <img src="assets/unsharp_mask_param.jpg" /> </p><BR>
 
-Unsharp masking creates a blurred version of the original image using a Gaussain filter with a specified radius. This blurred image contains only the low frequency components such as smooth gradients and large features. It is then subtracted from the original image to isolate the edges and fine details, which is called the unsharp mask. THis mask is then multiplied by the amount parameter and added back to the original image to boost details and edges. A larger radius allows the sharpening effect extends further from an edge. Compared to Gaussian and Sobel filtering, unsharp mask is more gentle and less sensitive to noise . 
+***Unsharp masking creates a blurred version of the original image using a Gaussain filter with a specified radius. This blurred image contains only the low frequency components such as smooth gradients and large features. It is then subtracted from the original image to isolate the edges and fine details, which is called the unsharp mask. THis mask is then multiplied by the amount parameter and added back to the original image to boost details and edges. A larger radius allows the sharpening effect extends further from an edge. Compared to Gaussian and Sobel filtering, unsharp mask is more gentle and less sensitive to noise.*** 
 
-Personally, I like the Gaussian filtered moon image the best because it creates that dramatic effect for the moon craters whilst the moon texture being relatively smooth. 
+***Personally, I like the Gaussian filtered moon image the best because it creates that dramatic effect for the moon craters whilst the moon texture being relatively smooth.*** 
 
 ## Task 7 - Test yourself Challenges
 
 * Improve the contrast of a lake and tree image store in file _lake&tree.png_ use any technique you have learned in this lab. Compare your results with others in the class.
 
-The original lake and tree image is underexposed, making it difficult to differentiate between the sky, mountains, tree, and water. I used gray scale range mapping, gamma correction and constrast stretching transformation to improve the contrast:
+***The original lake and tree image is underexposed, making it difficult to differentiate between the sky, mountains, tree, and water. I used gray scale range mapping, gamma correction and constrast stretching transformation to improve the contrast:***
 ```
 clear all
 close all
@@ -413,18 +413,18 @@ title("(1): Original image, (2): Image with gray scale range, (3): Image with ga
 ```
 <p align="center"> <img src="assets/lake&tree_contrast.jpg" /> </p><BR>
 
-For the gray scale range mapping, I remapped the intensity range so that any pixels with or below intensity 0.1 are mapped to 0 (black), and any pixels with or above intensity 0.5 are mapped to 1 (white). Values between 0.1 and 0.5 are linearly stretched across the full range. Since the original image uses only a narrow range of intensities, stretching this range increases contrast and enhances visibility. The sky becomes much brighter with clear cloud details.
+***For the gray scale range mapping, I remapped the intensity range so that any pixels with or below intensity 0.1 are mapped to 0 (black), and any pixels with or above intensity 0.5 are mapped to 1 (white). Values between 0.1 and 0.5 are linearly stretched across the full range. Since the original image uses only a narrow range of intensities, stretching this range increases contrast and enhances visibility. The sky becomes much brighter with clear cloud details.***
 
-Along with gray scale range mapping, gamma correction is also applied in image (3) to create a slightly more aggressive brightneing image. With gamma < 1 (0.85), the mid-tone regions such as the water and lower mountains become more apparent.
+***Along with gray scale range mapping, gamma correction is also applied in image (3) to create a slightly more aggressive brightneing image. With gamma < 1 (0.85), the mid-tone regions such as the water and lower mountains become more apparent.***
 
-For the contrast-stretching transformation, the exponent controls the steepness of the transformation curve. With a high E value (3.2), the steep sigmoid curve strongly compresses dark values upward while being gentler on brighter values. Therefore, the enhancement is the most balanced among all three methods, and the contrast is improved the most. The image appears more natural and continuous. 
+***For the contrast-stretching transformation, the exponent controls the steepness of the transformation curve. With a high E value (3.2), the steep sigmoid curve strongly compresses dark values upward while being gentler on brighter values. Therefore, the enhancement is the most balanced among all three methods, and the contrast is improved the most. The image appears more natural and continuous.*** 
 
-Personally, I like the gray scale range mapping image the most because I prefer the prominent details and highlights on the clouds whilst I appreciate the natural feeling contrast-stretching transofmration gives. 
+***Personally, I like the gray scale range mapping image the most because I prefer the prominent details and highlights on the clouds whilst I appreciate the natural feeling contrast-stretching transofmration gives.*** 
 
 
 * Use the Sobel filter in combination with any other techniques, find the edge of the circles in the image file _circles.tif_.  You are encouraged to discuss and work with your classmates and compare results.
 
-To detect the edge of the circles accurately, I combined the Sobel filter with the median filter, histogram equalisation, Otsu's thresholding, and morphological cleanup techniques:
+***To detect the edge of the circles accurately, I combined the Sobel filter with the median filter, histogram equalisation, Otsu's thresholding, and morphological cleanup techniques:***
 ```
 clear all
 close all
@@ -464,21 +464,21 @@ title("(1): Original image, (2): Noise reduced image, (3): Sobel gradient, (4): 
 ```
 <p align="center"> <img src="assets/edge_detect.jpg" /> </p><BR>
 
-Median filter was used to reduce noise since it's important to preserve the sharpness of the edge boundaries. As seen in image 2, the background table texture had been smoothened with the circle edges remaining sharp. The contrast was then enhanced by applying histogram equalisation. By redistributing pixel intensities to the full range, the edge gradients became easier to detect. The Sobel kernels were then applied, it computed gradients in both x and y directions separately, making it perfect for circular shapes. As seen in image 3, the Sobel gradient had strong responses at circle boundaries where intensity changes rapidly, but it also included a weak response to the boundaries of the brush at the bottom left corner. Therefore, that region was masked out. The optimal threshold was then determined by Otsu's method, converting the gradient magnitude to a binary edge map. It analysed the gradient magnitude histogram and found the threshold value that best divides pixels into two classes: edges and non-edges. Using the Otsu's method prevents the trial-and-error approach in manual thresholding. Two morphological oeprations were then used to isolate small noise artifacts and connect nearby edge segments to create a well-defined circular edges map.
+***Median filter was used to reduce noise since it's important to preserve the sharpness of the edge boundaries. As seen in image 2, the background table texture had been smoothened with the circle edges remaining sharp. The contrast was then enhanced by applying histogram equalisation. By redistributing pixel intensities to the full range, the edge gradients became easier to detect. The Sobel kernels were then applied, it computed gradients in both x and y directions separately, making it perfect for circular shapes. As seen in image 3, the Sobel gradient had strong responses at circle boundaries where intensity changes rapidly, but it also included a weak response to the boundaries of the brush at the bottom left corner. Therefore, that region was masked out. The optimal threshold was then determined by Otsu's method, converting the gradient magnitude to a binary edge map. It analysed the gradient magnitude histogram and found the threshold value that best divides pixels into two classes: edges and non-edges. Using the Otsu's method prevents the trial-and-error approach in manual thresholding. Two morphological oeprations were then used to isolate small noise artifacts and connect nearby edge segments to create a well-defined circular edges map.***
 
 
 * _office.jpg_ is a colour photograph taken of an office with bad exposure.  Use whatever means at your disposal to improve the lighting and colour of this photo.
 
-In the original office.jpg image, the interior such as the desk and the chair are underexposed, whilst the window and computer screen are overexposed. The overall image has a greenish tint and it's difficult to see the details on the desk since it is also a bit pixelated. 
+***In the original office.jpg image, the interior such as the desk and the chair are underexposed, whilst the window and computer screen are overexposed. The overall image has a greenish tint and it's difficult to see the details on the desk since it is also a bit pixelated.*** 
 
-To improve that, I processed the image multiple times. First, I upscaled the image by a factor of 2 using bicubic interpolation to increase its resolution. Upscaling the image makes it physically larger and reduces the visible pixelated appearance. 
+***To improve that, I processed the image multiple times. First, I upscaled the image by a factor of 2 using bicubic interpolation to increase its resolution. Upscaling the image makes it physically larger and reduces the visible pixelated appearance.*** 
 ```
 % Step 1: Edge-directed interpolation
 f_upscaled = imresize(f, scale_factor, 'bicubic');
 f_double = im2double(f_upscaled);
 ```
 
-However, simple upscaling often results in a soft, blurry appearance, so I applied a bilateral filter to each colour channel. Unlike standard Gaussian blurring, the bilateral filter preserves sharp edges around objects like the desk, monitor, and window frame to maintain the image clarity. 
+***However, simple upscaling often results in a soft, blurry appearance, so I applied a bilateral filter to each colour channel. Unlike standard Gaussian blurring, the bilateral filter preserves sharp edges around objects like the desk, monitor, and window frame to maintain the image clarity.*** 
 ```
 % Step 2: Bilateral upsampling
 % Process each channel separately for better quality
@@ -490,7 +490,7 @@ for c = 1:3
 end
 ```
 
-I then used a multi-scale detail enhancement technique to make the image appear sharper by separating the image into 3 frequency layers and boosting each layer: fine details (small textures like fabric on the chair, boosted the most), medium details (object boundaries, bossted moderately), and coarse details (large structures like walls, boosted gently). This created the perception of higher resolution and brought out textures that were previously hidden. 
+***I then used a multi-scale detail enhancement technique to make the image appear sharper by separating the image into 3 frequency layers and boosting each layer: fine details (small textures like fabric on the chair, boosted the most), medium details (object boundaries, bossted moderately), and coarse details (large structures like walls, boosted gently). This created the perception of higher resolution and brought out textures that were previously hidden.*** 
 ```
 % Step 3: Extract details at different scales
 detail_fine = f_bilateral - imgaussfilt(f_bilateral, 1);
@@ -509,7 +509,7 @@ f_enhanced_details = base + detail_coarse_enhanced + ...
 f_enhanced_details = max(0, min(1, f_enhanced_details));
 ```
 
-I then enhance the exposure and colors by converting the image to LAB color space. It separates brightness (L channel) from color information (a and b channels). By creating a brightness-based mask that identified the dark areas (left side of the image), I selectively brightened only the underexposed regions by adding up to 18 units of luminance, whilst leaving the already-bright window area unchanged. This prevents the overexposed areas from becoming completely washed out. I then applied contrast stretching to the L channel to spread out the tonal range between the darkest and brightest areas to make the image more visually appealing. 
+***I then enhance the exposure and colors by converting the image to LAB color space. It separates brightness (L channel) from color information (a and b channels). By creating a brightness-based mask that identified the dark areas (left side of the image), I selectively brightened only the underexposed regions by adding up to 18 units of luminance, whilst leaving the already-bright window area unchanged. This prevents the overexposed areas from becoming completely washed out. I then applied contrast stretching to the L channel to spread out the tonal range between the darkest and brightest areas to make the image more visually appealing.*** 
 ```
 % Step 4: LAB enhancement for exposure/color
 lab = rgb2lab(f_enhanced_details);
@@ -525,7 +525,7 @@ L_adjusted = min(L_adjusted, 100);
 L_adjusted = imadjust(L_adjusted / 100, [0.05 0.95], []) * 100;
 ```
 
-For the color correction, I boosted the a and b channel by 35% to create more vivid and saturated colours, and shifted the a channel (which controls the green-red axis) toward a more neutral tone. 
+***For the color correction, I boosted the a and b channel by 35% to create more vivid and saturated colours, and shifted the a channel (which controls the green-red axis) toward a more neutral tone.*** 
 ```
 % Vivid colors
 a_vivid = lab(:,:,2) * 1.35 - 3;
@@ -535,7 +535,7 @@ lab_final = cat(3, L_adjusted, a_vivid, b_vivid);
 f_color_enhanced = lab2rgb(lab_final);
 ```
 
-Finally, I applied adaptive sharpening to restore the edges. I calculated an edge map using gradient detection, which identifies strong edges in the image. Areas with prominent edges like the window frames received stronger sharpening while smooth areas like walls and the sky were sharpened more gently. 
+***Finally, I applied adaptive sharpening to restore the edges. I calculated an edge map using gradient detection, which identifies strong edges in the image. Areas with prominent edges like the window frames received stronger sharpening while smooth areas like walls and the sky were sharpened more gently.*** 
 ```
 % Step 5: Sharpen edges more than smooth areas
 gray = rgb2gray(f_color_enhanced);
@@ -556,6 +556,6 @@ f_final = max(0, min(1, f_final));
 
 <p align="center"> <img src="assets/office_enhanced.jpg" /> </p><BR>
 
-This resulted in a more natural image with the interior being properly exposed and details on the desk now being visible. The colors are more vivid and saturated and the edges are preserved throughout. 
+***This resulted in a more natural image with the interior being properly exposed and details on the desk now being visible. The colors are more vivid and saturated and the edges are preserved throughout.*** 
 
 
