@@ -80,7 +80,7 @@ For each pixel in the source image
     }
 ```
 > This is how the image after forward mapping. Why is that?
-<p align="center"> <img src="../images/forward_mapping_img.jpg" /> </p>
+<p align="center"> <img src="../images/forward_mapping_img.png" /> </p>
 
 **Since forward mapping maps every source pixel (with integer coorodinates) into non-integer coordinates in the destination. For example, source pixel (10, 10) -> (10.3, 11.7) then it got rounded (10, 12).** 
 
@@ -92,7 +92,7 @@ The problem with using the forward mapping directly is demonstrated in the figur
 
 The way around this is to use the _**reverse mapping**_ equation in Equation 2. This works out where each destination pixel came from in the source image. This uses the **inverse** of the transformation matrix, which fortunately is easy to work out using the Matlab's **inv()** function.
 
-<p align="center"> <img src="images/reverse_mapping.jpg" /> </p>
+<p align="center"> <img src="../images/reverse_mapping.jpg" /> </p>
 
 So the way to use the reverse mapping would be as follows:
 ```
