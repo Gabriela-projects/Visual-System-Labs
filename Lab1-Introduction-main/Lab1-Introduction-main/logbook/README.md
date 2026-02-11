@@ -10,7 +10,7 @@ In this lab you will write some simple programs using MATLAB to  manipulate some
 
 To make things nice and easy for you we’ve given you an image to play with. The image shown below is a 200x320 grey scale image called “clown”.  Now run MATLAB on your laptop.
 
-<p align="center"> <img src="images/clown.jpg" /> </p>
+<p align="center"> <img src="../images/clown.jpg" /> </p>
 To load the image into your workspace type:
 
 ```
