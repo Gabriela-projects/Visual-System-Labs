@@ -232,3 +232,5 @@ for y_d = 1:H        % row index (y)
     end
 end
 ```
+
+**Similar to rotation, using inverse mapping for shearing prevents holes in the final transformation. The above script loops through every pixel in the new image and calculates where that pixel is from in the original image. By centering the coordinates around the image midpoint, the shear occurs relative to the center rather than the top-left corner. If the calculated source coordinate falls outside the original bounds, the pixel would remain black.** 
