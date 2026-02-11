@@ -85,7 +85,7 @@ For each pixel in the source image
 >The problem with using the forward mapping directly is demonstrated in the figure below. Firstly there are pixels in the destination image with more than one source pixel. More of a problem is the fact that some pixels are never written to, leaving the destination image with holes!
 <p align="center"> <img src="../images/forward_mapping.jpg" /> </p>
 
->**Since forward mapping maps every source pixel (with integer coorodinates) into non-integer coordinates in the destination. For example, source pixel (10, 10) -> (10.3, 11.7) then it got rounded (10, 12).** 
+**Since forward mapping maps every source pixel (with integer coorodinates) into non-integer coordinates in the destination. For example, source pixel (10, 10) -> (10.3, 11.7) then it got rounded (10, 12).** 
 **This means not every destination pixel receives a value -> causing holes
 Several source pixels may round to the same destination pixel, overwriting each other.** 
 
@@ -103,7 +103,8 @@ For each pixel in the destination image
         Paint the destination pixel with that source pixel value
     }
 ```
-> **In reverse mapping, every destination pixel is guaranteed assigned to a value or decide it's outside so set it black.** 
+
+**In reverse mapping, every destination pixel is guaranteed assigned to a value or decide it's outside so set it black.** 
 
 
 >You should read the explanation above and make an attempt with your lab partner(s) to figure out how you might approach the problem.  You may then choose to write your version of the function.  If you find this too difficult, don't worry.  You have been provided with the "model solution" in this repo under the folder 'solutions'.  Make sure that you understand how the MATLAB code works.
