@@ -1,0 +1,25 @@
+clear all; close all;
+f = imread('assets/fillings.tif');
+
+% Reduce noise using median filtering
+f_med = medfilt2(f, [5 5]);
+
+threshold  = prctile(f_med(:), 97);
+bw = f_med > threshold;
+
+CC = bwconncomp(bw);
+num_fillings = CC.NumObjects;
+sizes = cellfun(@numel, CC.PixelIdxList);
+
+stats = regionprops(bw, f, 'Area', 'Centroid', 'MeanIntensity');
+fprintf('Total number of fillings: %d\n\n', num_fillings);
+fprintf('Individal filling details: \n');
+for i = 1:num_fillings
+    fprintf(' Filling %d %d pixels (Mean intensity: %.1f)\n', ...
+            i, sizes(i), stats(i).MeanIntensity);
+
+
+
+
+
+figure; montage({f, f_med, bw, bw_filled}); title('Image');

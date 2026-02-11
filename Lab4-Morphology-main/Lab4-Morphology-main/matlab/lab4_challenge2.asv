@@ -1,0 +1,11 @@
+clear all; close all;
+f = imread('assets/palm.tif');
+
+se = strel('disk', 10);
+tophat = 
+f_closed = imclose(f_inv, se_close);
+
+f_open = bwareaopen(f_closed, 10);
+f_result = imcomplement(f_open);
+
+figure; montage({f, f_closed, f_open, f_result}); title('(1): Original image');
