@@ -46,7 +46,7 @@ You can display the clown image using the built-in MATLAB function _imshow()_. T
 ### The Requirement
 
 You are required to write a function which rotates a grey scale image by _theta_ degrees radian, as shown below.
-<p align="center"> <img src="images/rotated.jpg" /> </p>
+<p align="center"> <img src="../images/rotated.jpg" /> </p>
 
 The function should have the following format:
 
@@ -66,9 +66,9 @@ Note the following:
 >## Everything You Need To Know About Rotating Images
 
 Just in case your maths is a bit rusty, here’s the basics of image rotation:
-<p align="center"> <img src="images/rotation_plot.jpg" /> </p>
+<p align="center"> <img src="../images/rotation_plot.jpg" /> </p>
 
-<p align="center"> <img src="images/rotation_eq.jpg" /> </p>
+<p align="center"> <img src="../images/rotation_eq.jpg" /> </p>
 
 The way to perform the forward mapping would be as follows:
 
@@ -80,18 +80,18 @@ For each pixel in the source image
     }
 ```
 > This is how the image after forward mapping. Why is that?
-<p align="center"> <img src="images/forward_mapping_img.jpg" /> </p>
+<p align="center"> <img src="../images/forward_mapping_img.jpg" /> </p>
 
 >The problem with using the forward mapping directly is demonstrated in the figure below. Firstly there are pixels in the destination image with more than one source pixel. More of a problem is the fact that some pixels are never written to, leaving the destination image with holes!
-<p align="center"> <img src="images/forward_mapping.jpg" /> </p>
+<p align="center"> <img src="../images/forward_mapping.jpg" /> </p>
 
->Since forward mapping maps every source pixel (with integer coorodinates) into non-integer coordinates in the destination. For example, source pixel (10, 10) -> (10.3, 11.7) then it got rounded (10, 12). 
-The means not every destination pixel receives a value -> causing holes
-Several source pixels may round to the same destination pixel, overwriting each other. 
+>**Since forward mapping maps every source pixel (with integer coorodinates) into non-integer coordinates in the destination. For example, source pixel (10, 10) -> (10.3, 11.7) then it got rounded (10, 12).** 
+**This means not every destination pixel receives a value -> causing holes
+Several source pixels may round to the same destination pixel, overwriting each other.** 
 
 The way around this is to use the _**reverse mapping**_ equation in Equation 2. This works out where each destination pixel came from in the source image. This uses the **inverse** of the transformation matrix, which fortunately is easy to work out using the Matlab's **inv()** function.
 
-<p align="center"> <img src="images/reverse_mapping.jpg" /> </p>
+<p align="center"> <img src="../images/reverse_mapping.jpg" /> </p>
 
 So the way to use the reverse mapping would be as follows:
 ```
@@ -103,7 +103,7 @@ For each pixel in the destination image
         Paint the destination pixel with that source pixel value
     }
 ```
-> In reverse mapping, every destination pixel is guaranteed assigned to a value or decide it's outside so set it black. 
+> **In reverse mapping, every destination pixel is guaranteed assigned to a value or decide it's outside so set it black.** 
 
 
 >You should read the explanation above and make an attempt with your lab partner(s) to figure out how you might approach the problem.  You may then choose to write your version of the function.  If you find this too difficult, don't worry.  You have been provided with the "model solution" in this repo under the folder 'solutions'.  Make sure that you understand how the MATLAB code works.
@@ -116,7 +116,7 @@ For each pixel in the destination image
 ### The Requirement
 
 You are required to write a function which shears the input image in both the x and y direction and centres the result, as shown in the figure below (using Xshear=0.1, Yshear=0.5).
-<p align="center"> <img src="images/sheared.jpg" /> </p>
+<p align="center"> <img src="../images/sheared.jpg" /> </p>
 
 The function should have the following format:
 ```
@@ -138,6 +138,6 @@ Thus when Xshear=1, Yshear=0
 >## Everything You Need To Know About Shearing Images
 
 Here’s the basics of shearing transformations:
-<p align="center"> <img src="images/shear_plot.jpg" /> </p>
+<p align="center"> <img src="../images/shear_plot.jpg" /> </p>
 
 As for the image rotation, you will want to use the reverse mapping of the transform to avoid problems with holes in the image.
