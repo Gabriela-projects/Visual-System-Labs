@@ -24,7 +24,7 @@ montage({A,A1})
 
 ***Dilation thickens the white regions so the text in the binary image. The image A has been dilated by the 3x3 matrix B1, so the structuring element B1 slides across every pixel in the image. If any part of B1 overlaps with a white pixel in the image, the center pixel becomes white which thickens the text. The structuring element forms a plus sign (+) pattern with where the 1s are positioned, it expands in 4 directions: up, down, left and right, so the overall character shape of the text can be preserved better.***
 
-***As shown on the image below, the broken strokes in the original image had reconnected after the dilation operation with most of the small gaps between nearby components being filled. ***
+***As shown on the image below, the broken strokes in the original image had reconnected after the dilation operation with most of the small gaps between nearby components being filled.***
 
 <p align="center"> <img src="assets/dilate_1.jpg" /> </p>
 
@@ -50,7 +50,7 @@ Bx = [1 0 1;
       1 0 1];
 ```
 
-***Making the SE diagonal cross expands the stroke in only the 4 diagonal directions: northeast, northwest, southeast, and southwest. This causes the vertical and horizontal strokes to be thickened less than the plus sign (+) and all 1s kernels, whilst the corners were emphasised more. The text appears more spiky and some of horiztonal and vertical gaps appear less connected than previous dilation operations. ***
+***Making the SE diagonal cross expands the stroke in only the 4 diagonal directions: northeast, northwest, southeast, and southwest. This causes the vertical and horizontal strokes to be thickened less than the plus sign (+) and all 1s kernels, whilst the corners were emphasised more. The text appears more spiky and some of horiztonal and vertical gaps appear less connected than previous dilation operations.***
 
 <p align="center"> <img src="assets/dilate_diagonal.jpg" /> </p>
 
@@ -101,7 +101,7 @@ Comment on the results.
 
 <p align="center"> <img src="assets/erode_1.jpg" /> </p>
 
-***Erosion thinners objects in a binary image, by shrinking the white regions and removing thin structures. The disk SE slides across the image, and a pixel remains white only if the entire disk fits completely within the white region at that position. It shrinks component uniformly in all direction and rounds sharp corners. As observed from the image above, the larger the structuring element radius, the more aggressive the erosion. The original image includes a circuit pattern with 4 white rectangular components in a grid-like arrangement, and radiating lines with varying thickness. With the eroding disk being radius 2, it removes the radiating lines that are thin whilst slightly shrinking all white components. As the radius increased to 10, all the connecting lines disappear and there is significant shrinkage in all features, the corners of rectangular pads become noticeably rounded and smaller. When the radius reaches 20, more features are removed, leaving only the middle square with a drastically reduced size.  *** 
+***Erosion thinners objects in a binary image, by shrinking the white regions and removing thin structures. The disk SE slides across the image, and a pixel remains white only if the entire disk fits completely within the white region at that position. It shrinks component uniformly in all direction and rounds sharp corners. As observed from the image above, the larger the structuring element radius, the more aggressive the erosion. The original image includes a circuit pattern with 4 white rectangular components in a grid-like arrangement, and radiating lines with varying thickness. With the eroding disk being radius 2, it removes the radiating lines that are thin whilst slightly shrinking all white components. As the radius increased to 10, all the connecting lines disappear and there is significant shrinkage in all features, the corners of rectangular pads become noticeably rounded and smaller. When the radius reaches 20, more features are removed, leaving only the middle square with a drastically reduced size.*** 
 
 
 ## Task 2 - Morphological Filtering with Open and Close
@@ -118,7 +118,7 @@ In this task, you will explore the effect of using Open and Close on a binary no
 
 Comment on the the results.
 
-***The original noisy fingerprint image*** (f) ***contains significant noise*** (small white dots) ***in the background and between the fingerprint ridges. The erosion operation (fe) eliminates all these small noise pixels because they are thinner than the sturcturing element, whilst also shrinking the fingerprint ridges themselves. The subsequent dilation operation (fed) increases the fingerprint ridges back to approximately their original width, restoring the fingerprint structure. ***
+***The original noisy fingerprint image*** (f) ***contains significant noise*** (small white dots) ***in the background and between the fingerprint ridges. The erosion operation (fe) eliminates all these small noise pixels because they are thinner than the sturcturing element, whilst also shrinking the fingerprint ridges themselves. The subsequent dilation operation (fed) increases the fingerprint ridges back to approximately their original width, restoring the fingerprint structure.***
 ***The opening oepration*** (fo) ***achieves the same result in a single operation. Opening is mathematically defined as erosion followed by dilation: fo = dilate(erode(f, SE), SE). This composite operation effectively removes small isolated white objects such as noise while preserving the shape and size of larger structures. It "opens up" gaps between objects and smooths outer contours.***
 
 <p align="center"> <img src="assets/open_image1.jpg" /> </p>
@@ -191,7 +191,7 @@ title("(1): Original image (I), (2): Binary image (BW), (3): Eroded binary image
 
 Diplay as montage {I, BW, erosed BW and boundary detected image}.  Comment on the result.
 
-***After converting the image into a binary image (BW) using Otsu's method, the blobs appear as white regions on a black background. Tiny white noise dots also appear in the background. The erosion operation shrinks all white regions inward by one pixel layer. It therefore successfully removes the background noise entirely since they are smaller than the 3x3 structuring element. ***
+***After converting the image into a binary image (BW) using Otsu's method, the blobs appear as white regions on a black background. Tiny white noise dots also appear in the background. The erosion operation shrinks all white regions inward by one pixel layer. It therefore successfully removes the background noise entirely since they are smaller than the 3x3 structuring element.***
 
 ***By subtracting the eroded image from BW, it isolates only the pixels that were removed during erosion, which includes the outermost layer (edges) of each object. In the boundary-detected image, thin white outlines trace the edge of each blob. However, the background noise is also visible as small white dots because these noise pixels also have boundaries.***
 
@@ -200,7 +200,7 @@ Diplay as montage {I, BW, erosed BW and boundary detected image}.  Comment on th
 
 How can you improve on this result?
 
-***To improve this and completely remove the noise, I filtered the boundary by size and removed any objects that are smaller than 6 pixels to ensure only the edge of the blobs are kept. ***
+***To improve this and completely remove the noise, I filtered the boundary by size and removed any objects that are smaller than 6 pixels to ensure only the edge of the blobs are kept.***
 
 ```
 Boundary_clean = bwareaopen(Boundary, 6);
@@ -252,9 +252,9 @@ title("(1): Original Image, (2): Binary Image, (3 - 5): Thinning operation 1,2,3
 
 <p align="center"> <img src="assets/thinning.jpg" /> </p>
 
-***The thinning operation thins objects without holes to minimally-connected strokes, reducing binary objects to their skeletal structure. Unlike simple erosion, thinning uses the hit-and-miss transform to decide which boundary pixels can be safetly removed without breaking connectivity between ridge sections and creating holes in the structure. It applies a series of structuring element pairs that "hit" specific pixel patterns on the object boundary while "missing" the background. Only pixels that match both conditions are removed and the process is repeated iteratively with different orientations of SEs to thin uniformly in all directions. ***
+***The thinning operation thins objects without holes to minimally-connected strokes, reducing binary objects to their skeletal structure. Unlike simple erosion, thinning uses the hit-and-miss transform to decide which boundary pixels can be safetly removed without breaking connectivity between ridge sections and creating holes in the structure. It applies a series of structuring element pairs that "hit" specific pixel patterns on the object boundary while "missing" the background. Only pixels that match both conditions are removed and the process is repeated iteratively with different orientations of SEs to thin uniformly in all directions.***
 
-***As you keep thinning the image, the fingerprint ridge width gradually decreases with the valley gaps widens correspondingly. As it progressively thins the image, some of the weaker ridge connections are broken, and minutiae features such as bifurcations and ridge endings become increasingly prominent and easier to identify as the surrounding ridge mass is removed. ***
+***As you keep thinning the image, the fingerprint ridge width gradually decreases with the valley gaps widens correspondingly. As it progressively thins the image, some of the weaker ridge connections are broken, and minutiae features such as bifurcations and ridge endings become increasingly prominent and easier to identify as the surrounding ridge mass is removed.***
 
 
 What will happen if you keep thinning the image?  Try thinning with *_n = inf_*.  (_inf_ is reserved word in Matlab which means infinity.  However, for _bwmorph_, it means repeat the function until the image stop changing.)
@@ -296,7 +296,7 @@ CC = bwconncomp(t)
 
 <p align="center"> <img src="assets/cc.jpg" /> </p>
 
-***A connected component in a binary image is a set of adjacent pixels. There are two standard connectivities: 4-connectivity (pixels are connected if their edges touch), 8-connectivity (pixels are connected if their edges or corners touch). For the *_bwconncomp_* function, it uses 8-connecitivity by default. According to the CC details image, 88 connected components are found, and each component represents either a single character, a group of touching characters, or noise. ***
+***A connected component in a binary image is a set of adjacent pixels. There are two standard connectivities: 4-connectivity (pixels are connected if their edges touch), 8-connectivity (pixels are connected if their edges or corners touch). For the *_bwconncomp_* function, it uses 8-connecitivity by default. According to the CC details image, 88 connected components are found, and each component represents either a single character, a group of touching characters, or noise.***
 
 <p align="center"> <img src="assets/CC_details.jpg" /> </p>
 
@@ -322,7 +322,7 @@ These few lines of code introduce you to some cool features in Matlab.
 
 5. Once this index is found, we have identified the largest connect component.  Using this index information, we can retrieve the list of pixel coordinates for this component in **_CC.PixelIdxList_**.
 
-***@numel counts the number of elements in each cell so that numPixels(k) = number of pixels in component k. This effectively creates the size table (Headers: connected component, no. of pixels in connected comp.) mentioned in Lecture 6 slide 24. It then stores the component[idx] with the most pixels (biggest pixels total) and set the list of all pixel indices belonging to it to be black (0). This erases the largest component from the image, which is then reflected on the modified image. ***  
+***@numel counts the number of elements in each cell so that numPixels(k) = number of pixels in component k. This effectively creates the size table (Headers: connected component, no. of pixels in connected comp.) mentioned in Lecture 6 slide 24. It then stores the component[idx] with the most pixels (biggest pixels total) and set the list of all pixel indices belonging to it to be black (0). This erases the largest component from the image, which is then reflected on the modified image.***  
 
 <p align="center"> <img src="assets/image_component.jpg" /> </p>
 
@@ -358,13 +358,13 @@ montage({f, g, fo, fr}, "size", [2 2])
 
 Comment on what you observe from these four images.
 
-***Morphological reconstruction operation can extract meaningful information about shapes in an image, in this context, the letters in the text_bw file. It processes the marker (the eroded image with the structuring element) based on the characteristics of the mask (the original image). So the marker image includes a binary image with small white dots at locations where tall characters exist. It then iteratively dilates the marker but constrains growth to stay within the mask so that only regions connencted to market points are restored. By using the original image as a "template" to guide the restoration process, the actual shapes of objects can be preserved. *** 
+***Morphological reconstruction operation can extract meaningful information about shapes in an image, in this context, the letters in the text_bw file. It processes the marker (the eroded image with the structuring element) based on the characteristics of the mask (the original image). So the marker image includes a binary image with small white dots at locations where tall characters exist. It then iteratively dilates the marker but constrains growth to stay within the mask so that only regions connencted to market points are restored. By using the original image as a "template" to guide the restoration process, the actual shapes of objects can be preserved.*** 
 
 <p align="center"> <img src="assets/reconstruct.jpg" /> </p>
 
 ***The structuring element we defined has a size of 17 x 1, which isolates tall vertical characters (>= 17 pixels tall, e.g. f, l, d, b) in erosion. The locations of these characters are extracted successfully, and represented by the white dots. The opening image (erosion -> dilation) using the same structuring element restores objects as vertical strokes of that exact 17 pixels tall, 1 pixel wide shape, regardless of the original character's actual appearance. It causes significant shape distortion and loses original character forms such as curves and width. This demonstrates why opening alone is inadequate for shape-preserving filtering.***
 
-***Meanwhile, reconstruction by erosion of the original image using the same structuring element accurately extracts those characters without deforming their appearances. It successfully shows tall characters (b, d, h, T, p, f) at marked locations.     ***
+***Meanwhile, reconstruction by erosion of the original image using the same structuring element accurately extracts those characters without deforming their appearances. It successfully shows tall characters (b, d, h, T, p, f) at marked locations.***
 
 
 Also try the function **_imfill_**, which will fill the holes in an image (Lecture 6 slides 19-21).
@@ -375,7 +375,7 @@ figure
 montage({f, ff})
 ```
 
-***A hole is defined as a backgroun region surrounded by a connected border of foreground pixels. As seen in the image below, all the holes within the text characters have been filled by the imfill function. Letters such as "o", "e", "a", "d" and "R" contain black regions (holes) and have now been converted to white.  ***
+***A hole is defined as a backgroun region surrounded by a connected border of foreground pixels. As seen in the image below, all the holes within the text characters have been filled by the imfill function. Letters such as "o", "e", "a", "d" and "R" contain black regions (holes) and have now been converted to white.***
 
 <p align="center"> <img src="assets/holes_filled.jpg" /> </p>
 
@@ -424,13 +424,13 @@ You may like to attemp one or more of the following challenges. Unlike tasks in 
 % Reduce noise using median filtering
 f_med = medfilt2(f, [5 5]);
 ```
-***Fillngs are represented as the brightest white regions in dental X-rays. To isolate these filling pixels from the background, a percentile-based threshold was utilised. The threshold was set as the 97th percentile of the filtered image's intensity distribution, which means only pixels in the top 3% brightest are classified as fillings. Rather than using a fixed intensity value, percentile-based thresholding adapts to the specific intensity distributino of this image, so that it can be applied under various exposure settings. ***
+***Fillngs are represented as the brightest white regions in dental X-rays. To isolate these filling pixels from the background, a percentile-based threshold was utilised. The threshold was set as the 97th percentile of the filtered image's intensity distribution, which means only pixels in the top 3% brightest are classified as fillings. Rather than using a fixed intensity value, percentile-based thresholding adapts to the specific intensity distributino of this image, so that it can be applied under various exposure settings.***
 ```
 % Use the top 3% as threshold to find the bright fillings 
 threshold  = prctile(f_med(:), 97);
 ```
 
-***A binary image was then created where pixels exceeding the threshold become white (1) and all others become black (0). The binary image was analysed using bwconncomp(bw) to identify and label connected groups of white pixels. The size of each filling was calculated using cellfun(@numel, CC.PixelIdxList) similar to the computation in Task 5. ***
+***A binary image was then created where pixels exceeding the threshold become white (1) and all others become black (0). The binary image was analysed using bwconncomp(bw) to identify and label connected groups of white pixels. The size of each filling was calculated using cellfun(@numel, CC.PixelIdxList) similar to the computation in Task 5.***
 
 ```
 % Binary image where pixels above the threshold become white
@@ -457,7 +457,7 @@ se = strel('disk', 5);
 f_open = imopen(f, se);
 ```
 
-***Reconstruction is therefore used to preserve the exact shapes of the main lines whilst removing non-needed features. To identify locations of only the thickest main lines, a marker is by applying aggressive erosion to the opened image with a disk SE of radius 8. It acts as a filter to ensure only the thickest palm lines remain visible. The marker image shows only the 2 main structural palm lines. ***
+***Reconstruction is therefore used to preserve the exact shapes of the main lines whilst removing non-needed features. To identify locations of only the thickest main lines, a marker is by applying aggressive erosion to the opened image with a disk SE of radius 8. It acts as a filter to ensure only the thickest palm lines remain visible. The marker image shows only the 2 main structural palm lines.***
 
 ***A mask is then created to define the boundary within which reconstruction can operate. The mask image shows that it excludes most fine ridges and is slightly more eroded around the edges compared to the opened image. Reconstruction then restores the shape of main palm lines by dilating the marker within the boundary of the mask. imadjust is applied to enhance the contrast of the final image to improve visibility.*** 
 ```
@@ -467,7 +467,7 @@ f_reconstructed = imreconstruct(marker, mask);
 f_reconstructed = imadjust(f_reconstructed);
 ```
 
-***The final image contains main palm lines as clearly visible, distinct white lines while the underlying ridge texture is significantly reduced compared to original and opened images. The lines maintain their natural curved shapes without blur. ***
+***The final image contains main palm lines as clearly visible, distinct white lines while the underlying ridge texture is significantly reduced compared to original and opened images. The lines maintain their natural curved shapes without blur.***
 
 
 3. The file _'assets/normal-blood.png'_ is a microscope image of red blood cells. Using various techniques you have learned, write a Matlab .m script to count the number of red blood cells.
@@ -490,7 +490,7 @@ figure; montage({f, bw,  bw_filled}, "size", [1 3]); title(['(1): Original image
 ```
 <p align="center"> <img src="assets/challenge3.jpg" /> </p>
 
-***The script counted 43 cells are presented in the image whilst there are 44 cells presented. This is most likely due to cell overlapping which causes bwconncomp unable to distinguish between two circles that share a border. In addition, some cells are partially cut off by the image border. While the script included these in the count, if a hole in an edge-cell is open to the border, imfill function can't close it which can lead to fragmentation of that cell. *** 
+***The script counted 43 cells are presented in the image whilst there are 44 cells presented. This is most likely due to cell overlapping which causes bwconncomp unable to distinguish between two circles that share a border. In addition, some cells are partially cut off by the image border. While the script included these in the count, if a hole in an edge-cell is open to the border, imfill function can't close it which can lead to fragmentation of that cell.*** 
 
 
 ---
